@@ -1,38 +1,51 @@
-class coffee:
+class Customer:
     all = []
-
+    
     def __init__(self, name):
-        self.name = None
+        self._name = name
         self.name = name
-        coffee.all.append(self)
-
+        Customer.all.append(self)
+    
     @property
     def name(self):
         return self._name
     
     @name.setter
-    def name (self, value):
+    def name(self, value):
         if not isinstance(value, str):
             raise TypeError("Name must be a string")
-        if len(value) < 3:
-            raise ValueError("Name must be at least 3 characters long")
+        if not (4 <= len(value) < 20):
+             raise ValueError("Name must be between 4 and 19 characters")
         self._name = value
 
     def orders(self):
-        from order import order
-        return [order for order in order.all if order.coffee == self]
+        from order import Order
+        return [order for order in Order.all if order.customer == self]
     
-    #list of customers who ordered this coffee
-    def customers(self):
-        return list[{order.customer for order in self.orders()}]
+    def coffees(self):
+        # Return a unique list of Coffee instances that the customer has ordered
+        return list({order.coffee for order in self.orders()})
     
-    #returns total number of orders for the coffee
-    def num_orders(self):
-        return len(self.orders())
+    def create_order(self, coffee, price):
+        from order import Order
+        return Order(self, coffee, price)
     
-    #average price for the coffee
-    def average_price(self):
-        orders = self.orders()
-        if not orders:
-            return 0
-        return sum(order.price for order in orders) / len(orders)
+    @classmethod
+    def most_aficionado(cls, coffee):
+        # Find the customer who has spent the most on the given coffee
+        coffee_customers = {}
+        
+        from order import Order
+        coffee_orders = [order for order in Order.all if order.coffee == coffee]
+        
+        if not coffee_orders:
+            return None
+            
+        for order in coffee_orders:
+            customer = order.customer
+            if customer not in coffee_customers:
+                coffee_customers[customer] = 0
+            coffee_customers[customer] += order.price
+            
+        # Return the customer who spent the most
+        return max(coffee_customers.items(), key=lambda x: x[1])[0]

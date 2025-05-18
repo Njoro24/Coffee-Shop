@@ -1,16 +1,16 @@
-class coffee:
+class Coffee:
     all = []
 
     def __init__(self, name):
-        self.name = None
         self.name = name
-        coffee.all.append(self)
+        self.name = name
+        Coffee.all.append(self)
 
     @property
     def name(self):
         return self._name
     
-    @name.settert
+    @name.setter
     def name (self, value):
         if not isinstance(value, str):
             raise TypeError("Name must be a string")
@@ -19,12 +19,12 @@ class coffee:
         self._name = value
         
     def orders(self):
-        from order import order
-        return [order for order in order.all if order.coffee == self]
+        from order import Order
+        return [order for order in Order.all if order.coffee == self]
     
     #list of customers who ordered this coffee
     def customers(self):
-        from customer import customer
+        from customer import Customer
         return list({order.customer for order in self.orders()})
     
     #returns total number of orders for this coffee
