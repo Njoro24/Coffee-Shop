@@ -32,9 +32,9 @@ class TestCustomer:
             Customer("ThisNameIsTooLong1234")
     
     def test_orders(self):
-        order1 = Order(self.customer1, self.coffee1, 3.5)
-        order2 = Order(self.customer1, self.coffee2, 4.5)
-        order3 = Order(self.customer2, self.coffee1, 3.5)
+        order1 = Order(self.customer1, self.coffee1, 350)
+        order2 = Order(self.customer1, self.coffee2, 45)
+        order3 = Order(self.customer2, self.coffee1, 350)
         
         assert len(self.customer1.orders()) == 2
         assert order1 in self.customer1.orders()
@@ -42,9 +42,9 @@ class TestCustomer:
         assert order3 not in self.customer1.orders()
     
     def test_coffees(self):
-        Order(self.customer1, self.coffee1, 3.5)
-        Order(self.customer1, self.coffee2, 4.5)
-        Order(self.customer1, self.coffee1, 3.0)  # Duplicate coffee shouldn't count twice
+        Order(self.customer1, self.coffee1, 350)
+        Order(self.customer1, self.coffee2, 450)
+        Order(self.customer1, self.coffee1, 350)
         
         customer_coffees = self.customer1.coffees()
         assert len(customer_coffees) == 2
@@ -52,23 +52,23 @@ class TestCustomer:
         assert self.coffee2 in customer_coffees
     
     def test_create_order(self):
-        order = self.customer1.create_order(self.coffee1, 3.5)
+        order = self.customer1.create_order(self.coffee1, 350)
         
         assert isinstance(order, Order)
         assert order.customer == self.customer1
         assert order.coffee == self.coffee1
-        assert order.price == 3.5
+        assert order.price == 350
     
     def test_most_aficionado(self):
         # Customer1 spends more on coffee1
-        Order(self.customer1, self.coffee1, 4.0)
-        Order(self.customer1, self.coffee1, 3.5)
-        Order(self.customer2, self.coffee1, 3.0)
+        Order(self.customer1, self.coffee1, 450)
+        Order(self.customer1, self.coffee1, 350)
+        Order(self.customer2, self.coffee1, 350)
         
         # Customer2 spends more on coffee2
-        Order(self.customer1, self.coffee2, 2.0)
-        Order(self.customer2, self.coffee2, 4.0)
-        Order(self.customer2, self.coffee2, 5.0)
+        Order(self.customer1, self.coffee2, 800)
+        Order(self.customer2, self.coffee2, 450)
+        Order(self.customer2, self.coffee2, 900)
         
         assert Customer.most_aficionado(self.coffee1) == self.customer1
         assert Customer.most_aficionado(self.coffee2) == self.customer2

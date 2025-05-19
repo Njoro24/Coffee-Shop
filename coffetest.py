@@ -26,13 +26,14 @@ class TestCoffee:
             Coffee(123)
         
         # Test length validation
+        
         with pytest.raises(ValueError):
-            Coffee("AB")  # Less than 3 characters
+            Coffee("AB")
     
     def test_orders(self):
-        order1 = Order(self.customer1, self.coffee1, 3.5)
-        order2 = Order(self.customer2, self.coffee1, 4.5)
-        order3 = Order(self.customer1, self.coffee2, 3.5)
+        order1 = Order(self.customer1, self.coffee1, 350)
+        order2 = Order(self.customer2, self.coffee1, 450)
+        order3 = Order(self.customer1, self.coffee2, 350)
         
         coffee1_orders = self.coffee1.orders()
         assert len(coffee1_orders) == 2
@@ -41,9 +42,9 @@ class TestCoffee:
         assert order3 not in coffee1_orders
     
     def test_customers(self):
-        Order(self.customer1, self.coffee1, 3.5)
-        Order(self.customer2, self.coffee1, 4.5)
-        Order(self.customer1, self.coffee1, 3.0)  # Duplicate customer shouldn't count twice
+        Order(self.customer1, self.coffee1, 350)
+        Order(self.customer2, self.coffee1, 450)
+        Order(self.customer1, self.coffee1, 350)  
         
         coffee_customers = self.coffee1.customers()
         assert len(coffee_customers) == 2
@@ -53,17 +54,17 @@ class TestCoffee:
     def test_num_orders(self):
         assert self.coffee1.num_orders() == 0
         
-        Order(self.customer1, self.coffee1, 3.5)
+        Order(self.customer1, self.coffee1, 350)
         assert self.coffee1.num_orders() == 1
         
-        Order(self.customer2, self.coffee1, 4.5)
+        Order(self.customer2, self.coffee1, 450)
         assert self.coffee1.num_orders() == 2
     
     def test_average_price(self):
         assert self.coffee1.average_price() == 0  # No orders yet
         
-        Order(self.customer1, self.coffee1, 3.0)
-        assert self.coffee1.average_price() == 3.0
+        Order(self.customer1, self.coffee1, 350)
+        assert self.coffee1.average_price() == 350
         
-        Order(self.customer2, self.coffee1, 5.0)
-        assert self.coffee1.average_price() == 4.0  # (3.0 + 5.0) / 2 = 4.0
+        Order(self.customer2, self.coffee1, 800)
+        assert self.coffee1.average_price() == 450
