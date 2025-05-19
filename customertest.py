@@ -11,8 +11,8 @@ class TestCustomer:
         Order.all = []
         
         # Create test instances
-        self.customer1 = Customer("John")
-        self.customer2 = Customer("Jane")
+        self.customer1 = Customer("Mutiso")
+        self.customer2 = Customer("Kasongo")
         self.coffee1 = Coffee("Espresso")
         self.coffee2 = Coffee("Latte")
     

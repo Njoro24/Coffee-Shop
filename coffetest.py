@@ -13,8 +13,8 @@ class TestCoffee:
         # Create test instances
         self.coffee1 = Coffee("Espresso")
         self.coffee2 = Coffee("Latte")
-        self.customer1 = Customer("John")
-        self.customer2 = Customer("Jane")
+        self.customer1 = Customer("Mutiso")
+        self.customer2 = Customer("Kasongo")
     
     def test_init(self):
         assert self.coffee1.name == "Espresso"
